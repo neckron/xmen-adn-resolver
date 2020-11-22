@@ -1,5 +1,7 @@
 package com.xmen.dna.service.impl;
 
+import static com.xmen.dna.util.GeneralUtils.getStringFromStringArray;
+
 import java.util.StringJoiner;
 
 import org.slf4j.Logger;
@@ -31,7 +33,6 @@ public class DNAMutantResolverServiceImpl implements DNAResolverService {
      */
     @Override
     public DNAResponseDTO isMutant(DNARequestDTO dna) {
-        //TODO check in data base if it was calculated already
         Boolean validationResult;
         String plainDNA = getStringFromStringArray(dna.getDna());
         String algorithmName = DNAAlgorithmFactory.validateAlgorithm(dna.getValidationAlgorithm());
@@ -41,11 +42,12 @@ public class DNAMutantResolverServiceImpl implements DNAResolverService {
             validationResult = individualMutantValidation.getIsMutant();
         }else {
             logger.info("no validation has founded for DNA {} using algorithm {} running algorithm..." ,plainDNA, algorithmName);
-            validationResult = DNAAlgorithmFactory.supplyAlgorithm(dna.getValidationAlgorithm()).isMutant(dna.getDna());
+            DNAAlgorithmFactory algorithmFactory = new DNAAlgorithmFactory();
+            validationResult = algorithmFactory.supplyAlgorithm(dna.getValidationAlgorithm()).isMutant(dna.getDna());
             logger.info("saving validation result in dBase");
             mutantValidationRepository.save(buildDNAValidation(plainDNA, algorithmName, validationResult));
         }
-        return new DNAResponseDTO("Operation finished successfully", validationResult);
+        return new DNAResponseDTO("validation finished successfully", validationResult);
     }
 
     private DNAIndividualMutantValidation buildDNAValidation(String dna, String algorithm, Boolean validation) {
@@ -55,14 +57,6 @@ public class DNAMutantResolverServiceImpl implements DNAResolverService {
                 .algorithm(algorithm)
                 .build();
         return dnaIndividualMutantValidation;
-    }
-
-    private String getStringFromStringArray(String[] stringArray) {
-        StringJoiner joiner = new StringJoiner("");
-        for(String singleString : stringArray){
-            joiner.add(singleString);
-        }
-        return joiner.toString();
     }
 
 }

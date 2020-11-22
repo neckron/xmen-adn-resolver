@@ -6,6 +6,6 @@ public class DNASimpleResolution implements DNAResolutionAlgorithm {
 
     @Override
     public boolean isMutant(String[] dna) {
-        return true;
+        return false;
     }
 }

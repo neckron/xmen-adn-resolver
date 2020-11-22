@@ -1,7 +1,5 @@
 package com.xmen.dna.dto.response;
 
-import org.springframework.stereotype.Service;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

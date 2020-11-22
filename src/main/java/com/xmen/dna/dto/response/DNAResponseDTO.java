@@ -1,5 +1,12 @@
 package com.xmen.dna.dto.response;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
 public class DNAResponseDTO {
 
     private String message;
@@ -8,21 +15,5 @@ public class DNAResponseDTO {
     public DNAResponseDTO(String message, Boolean isMutant) {
         this.message = message;
         this.isMutant = isMutant;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Boolean getMutant() {
-        return isMutant;
-    }
-
-    public void setMutant(Boolean mutant) {
-        isMutant = mutant;
     }
 }

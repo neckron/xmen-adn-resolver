@@ -24,7 +24,7 @@ public class DNAAlgorithmFactory {
     }
 
 
-    public static DNAResolutionAlgorithm supplyAlgorithm(String algorithmName) {
+    public DNAResolutionAlgorithm supplyAlgorithm(String algorithmName) {
         Supplier<DNAResolutionAlgorithm> algorithm = ALGORITHM_SUPPLIER.get(algorithmName);
         if (algorithm == null) {
             algorithm = ALGORITHM_SUPPLIER.get(DEFAULT);
@@ -32,6 +32,11 @@ public class DNAAlgorithmFactory {
         return algorithm.get();
     }
 
+    /**
+     *
+     * @param algorithmName
+     * @return
+     */
     public static String validateAlgorithm(String algorithmName) {
         if (ALGORITHM_SUPPLIER.containsKey(algorithmName)) {
             return algorithmName;

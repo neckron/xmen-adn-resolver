@@ -11,6 +11,6 @@ public class StatsDTO {
 
     private String algorithmName;
     private Long count;
-    private String type;
+    private Boolean type;
 
 }

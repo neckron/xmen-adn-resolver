@@ -2,8 +2,6 @@ package com.xmen.dna.service.impl;
 
 import static com.xmen.dna.util.GeneralUtils.getStringFromStringArray;
 
-import java.util.StringJoiner;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -35,7 +33,7 @@ public class DNAMutantResolverServiceImpl implements DNAResolverService {
     public DNAResponseDTO isMutant(DNARequestDTO dna) {
         Boolean validationResult;
         String plainDNA = getStringFromStringArray(dna.getDna());
-        String algorithmName = DNAAlgorithmFactory.validateAlgorithm(dna.getValidationAlgorithm());
+        String algorithmName = DNAAlgorithmFactory.ValidateAlgorithmName(dna.getValidationAlgorithm());
         DNAIndividualMutantValidation individualMutantValidation = mutantValidationRepository.findByDnaSequenceAndAlgorithm(plainDNA, algorithmName);
         if(individualMutantValidation != null){
             logger.info("validation founded for DNA {} using algorithm {}" ,plainDNA, dna.getValidationAlgorithm());
@@ -51,12 +49,11 @@ public class DNAMutantResolverServiceImpl implements DNAResolverService {
     }
 
     private DNAIndividualMutantValidation buildDNAValidation(String dna, String algorithm, Boolean validation) {
-        DNAIndividualMutantValidation dnaIndividualMutantValidation = DNAIndividualMutantValidation.builder()
+        return DNAIndividualMutantValidation.builder()
                 .dnaSequence(dna)
                 .isMutant(validation)
                 .algorithm(algorithm)
                 .build();
-        return dnaIndividualMutantValidation;
     }
 
 }

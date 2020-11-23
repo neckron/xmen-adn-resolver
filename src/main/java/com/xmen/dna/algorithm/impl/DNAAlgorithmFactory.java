@@ -37,7 +37,7 @@ public class DNAAlgorithmFactory {
      * @param algorithmName
      * @return
      */
-    public static String validateAlgorithm(String algorithmName) {
+    public static String ValidateAlgorithmName(String algorithmName) {
         if (ALGORITHM_SUPPLIER.containsKey(algorithmName)) {
             return algorithmName;
         }

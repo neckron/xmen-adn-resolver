@@ -43,7 +43,7 @@ public class DNAMutantValidationController {
             @ApiParam("individual dna sequence to be validated by algorithm")
             @Valid @RequestBody DNARequestDTO requestBody) {
         DNAResponseDTO responseBody = dnaResolverService.isMutant(requestBody);
-        if(responseBody.getIsMutant()) {
+        if(responseBody.getIsMutant().booleanValue()) {
             return ResponseEntity.ok().body(responseBody);
         }else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseBody);

@@ -1,11 +1,9 @@
 package com.xmen.dna.service;
 
-import java.util.List;
-
-import com.xmen.dna.dto.response.StatsDTO;
+import com.xmen.dna.dto.response.VerificationStatsDTO;
 
 public interface DNAStatsService {
 
-    List<StatsDTO> getMutantsStatistics(String algorithm);
+    VerificationStatsDTO getMutantsStatistics(String algorithm);
 
 }

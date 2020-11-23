@@ -1,15 +1,13 @@
 package com.xmen.dna.algorithm.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.format.annotation.NumberFormat;
 
 import com.xmen.dna.algorithm.DNAResolutionAlgorithm;
-import com.xmen.dna.service.DNAStatsService;
 
 @RunWith(JUnit4.class)
 public class DNAAlgorithmFactoryTest {
@@ -24,15 +22,15 @@ public class DNAAlgorithmFactoryTest {
     @Test
     public void test_validate_algorithm() {
         String result;
-        result = DNAAlgorithmFactory.validateAlgorithm("default");
+        result = DNAAlgorithmFactory.ValidateAlgorithmName("default");
         assertEquals("default",result);
-        result = DNAAlgorithmFactory.validateAlgorithm("simple");
+        result = DNAAlgorithmFactory.ValidateAlgorithmName("simple");
         assertEquals("simple",result);
-        result = DNAAlgorithmFactory.validateAlgorithm(null);
+        result = DNAAlgorithmFactory.ValidateAlgorithmName(null);
         assertEquals("default",result);
-        result = DNAAlgorithmFactory.validateAlgorithm("");
+        result = DNAAlgorithmFactory.ValidateAlgorithmName("");
         assertEquals("default",result);
-        result = DNAAlgorithmFactory.validateAlgorithm("anyother");
+        result = DNAAlgorithmFactory.ValidateAlgorithmName("anyother");
         assertEquals("default",result);
     }
 

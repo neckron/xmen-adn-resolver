@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DnaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DnaApplication.class, args);
+		SpringApplication.run(DnaApplication.class);
 	}
 
 }

@@ -4,6 +4,8 @@ import java.util.StringJoiner;
 
 public class GeneralUtils {
 
+    private GeneralUtils() {}
+
     /**
      *
      * @param stringArray
@@ -17,6 +19,17 @@ public class GeneralUtils {
             }
         }
         return joiner.toString();
+    }
+
+    public static Float calculateRatio(Long principalCount, Long secundaryCount) {
+
+        principalCount = principalCount != null ? principalCount:0L;
+
+        if(secundaryCount == null || secundaryCount.equals(0L) ) {
+            return Float.valueOf(principalCount);
+        }else {
+            return Float.valueOf(principalCount)/Float.valueOf(secundaryCount);
+        }
     }
 
 }

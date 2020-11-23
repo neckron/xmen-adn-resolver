@@ -1,1 +1,1 @@
-java -Dserver.port=$PORT -Ddb.url=$DBURL -Ddb.username=$DBUSERNAME -Ddb.password=$DBPWD $JAVA_OPTS -jar target/dna-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -Ddb.url=$DBURL -Ddb.username=$DBUSERNAME -Ddb.password=$DBPWD $JAVA_OPTS -jar target/dna-0.0.1-SNAPSHOT.jar

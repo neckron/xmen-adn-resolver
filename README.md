@@ -7,7 +7,7 @@
  
 ## Solución
  
- Diagramas [aquí](https://drive.google.com/file/d/1ZP86fVmE3mB8dgZ8-XtSz2CxvuTMZVna/view?usp=sharing) . olicitar acceso.
+ Diagramas [aquí](https://drive.google.com/file/d/1ZP86fVmE3mB8dgZ8-XtSz2CxvuTMZVna/view?usp=sharing) . solicitar acceso.
 
 ## Guía de ejecución (local)
 

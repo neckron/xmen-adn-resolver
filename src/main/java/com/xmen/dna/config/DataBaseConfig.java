@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+/**
+ * This class helps to configure the DB connection
+ * @author fr.rodriguez
+ */
 @Configuration
 public class DataBaseConfig {
 

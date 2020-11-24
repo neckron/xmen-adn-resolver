@@ -22,15 +22,15 @@ public class DNAAlgorithmFactoryTest {
     @Test
     public void test_validate_algorithm() {
         String result;
-        result = DNAAlgorithmFactory.ValidateAlgorithmName("default");
+        result = DNAAlgorithmFactory.validateAlgorithmName("default");
         assertEquals("default",result);
-        result = DNAAlgorithmFactory.ValidateAlgorithmName("simple");
+        result = DNAAlgorithmFactory.validateAlgorithmName("simple");
         assertEquals("simple",result);
-        result = DNAAlgorithmFactory.ValidateAlgorithmName(null);
+        result = DNAAlgorithmFactory.validateAlgorithmName(null);
         assertEquals("default",result);
-        result = DNAAlgorithmFactory.ValidateAlgorithmName("");
+        result = DNAAlgorithmFactory.validateAlgorithmName("");
         assertEquals("default",result);
-        result = DNAAlgorithmFactory.ValidateAlgorithmName("anyother");
+        result = DNAAlgorithmFactory.validateAlgorithmName("anyother");
         assertEquals("default",result);
     }
 

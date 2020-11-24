@@ -2,7 +2,13 @@
 
 ## Contexto
 
+ - Encontrar si un arreglo de cadenas contiene ADN Mutante, dados ciertos criterios.
+ - Obtener la relación entre la cantidad de mutantes y humanos dado que se ha validado el adn de cada individuo previamente.
+ 
 ## Solución
+
+
+
 
 ## Guía de ejecución (local)
 
@@ -43,7 +49,7 @@ CREATE INDEX idx_dna_seuqnce_algorithm
     (dna_sequence COLLATE pg_catalog."default" ASC NULLS LAST, validation_algorithm COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;
 ```
- - modificar `application.properties` con la información de la base de datos creada.
+ - modificar `application.properties` con la información de la base de datos recién creada.
  
  - en la raiz del proyecto ejecutar:
     - validación tests : `mvn clean test`
@@ -51,3 +57,13 @@ CREATE INDEX idx_dna_seuqnce_algorithm
     - correr proyecto localmente: `mvn spring-boot:run`
     
  - una vez se ha desplegado éxitosamente, usar este [Postman Collection](https://www.getpostman.com/collections/0498f3d3b7769f7374bb) para lanzar request al API.
+ 
+ ## Cloud
+ 
+ - Para desplegar una nueva versión se debe hacer push a la rama `master`. Heroku se encarga de correr los tests y deplegar la app automáticamente.
+ - endpoint : xmen-dnaresolution.herokuapp.com
+ 
+ ## API Documentación
+ 
+ - [local](http://localhost:8999/swagger-ui.html)
+ - [cloud](http://xmen-dnaresolution.herokuapp.com/swagger-ui.html)

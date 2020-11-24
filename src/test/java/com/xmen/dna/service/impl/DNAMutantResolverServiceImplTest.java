@@ -17,6 +17,7 @@ import com.xmen.dna.algorithm.impl.DNAAlgorithmFactory;
 import com.xmen.dna.domain.DNAIndividualMutantValidation;
 import com.xmen.dna.dto.request.DNARequestDTO;
 import com.xmen.dna.dto.response.DNAResponseDTO;
+import com.xmen.dna.exception.SquareMatrixException;
 import com.xmen.dna.repository.DNAIndividualMutantValidationRepository;
 
 //@RunWith(PowerMockRunner.class)
@@ -48,7 +49,7 @@ public class DNAMutantResolverServiceImplTest {
     }
 
     @Test
-    public void test_isMutant_validation_not_in_dbase() {
+    public void test_isMutant_validation_not_in_dbase() throws SquareMatrixException {
         when(mutantValidationRepository.findByDnaSequenceAndAlgorithm("AAAACCCC", "simple"))
                 .thenReturn(null);
 

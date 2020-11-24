@@ -20,6 +20,10 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+/**
+ * API Rest controller to resolve request at /mutant endpoint
+ * @author fr.rodriguez
+ */
 @Api(value = "Validates if an individual is mutant or human depending its dna sequence")
 @RestController
 @Validated
@@ -33,9 +37,9 @@ public class DNAMutantValidationController {
 
     @ApiOperation(value = "This endpoint confirms that a given DNA sequence holds mutant DNA")
     @ApiResponses(  value = {
-            @ApiResponse(code = 200 , message = "the validated dna corresponds to a mutant individual" , response=DNAResponseDTO.class),
-            @ApiResponse(code = 403 , message = "the validated dna corresponds to a human individual" , response=DNAResponseDTO.class),
-            @ApiResponse(code = 404 , message = "the validated dna corresponds to a human individual" , response=DNAResponseDTO.class),
+            @ApiResponse(code = 200 , message = "Mutant DNA founded"),
+            @ApiResponse(code = 403 , message = "No Mutant DNA founded (Human DNA)" , response=DNAResponseDTO.class),
+            @ApiResponse(code = 404 , message = "Request error" , response=DNAResponseDTO.class),
             @ApiResponse(code = 500 , message = "internal server error" , response=DNAResponseDTO.class)
     })
     @PostMapping(value = "/mutant", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE )

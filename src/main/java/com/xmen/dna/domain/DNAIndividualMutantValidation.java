@@ -12,6 +12,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * entity that represents dna_mutant_table in the dBase
+ * @author fr.rodriguez
+ */
 @Builder(toBuilder = true)
 @Getter
 @AllArgsConstructor
@@ -28,10 +32,10 @@ public class DNAIndividualMutantValidation {
     @Column(name = "validation_algorithm")
     private String algorithm;
 
-    @Column(name = "dna_sequence") // TODO unique and index
+    @Column(name = "dna_sequence")
     private String dnaSequence;
 
-    @Column(name = "individual_name") // TODO unique constraint with algoritm // index
+    @Column(name = "individual_name")
     private String individualName;
 
     @Column(name = "is_mutant")

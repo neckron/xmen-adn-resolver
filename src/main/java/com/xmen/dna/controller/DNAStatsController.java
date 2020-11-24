@@ -14,6 +14,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+/**
+ * Class to resolve request for endpoint /stats
+ * @author fr.rodriguez
+ */
 @RestController
 @Validated
 public class DNAStatsController {
@@ -26,8 +30,7 @@ public class DNAStatsController {
 
     @ApiOperation(value = "This endpoint confirms that a given DNA sequence holds mutant DNA")
     @ApiResponses( value = {
-            @ApiResponse(code = 200 , message = "success" , response=String.class),
-            @ApiResponse(code = 403 , message = "failure" , response=String.class)
+            @ApiResponse(code = 200 , message = "success" , response=VerificationStatsDTO.class)
     })
     @GetMapping(value = "/stats", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<VerificationStatsDTO> getMutantStatistics(@RequestParam(required = false) String algorithmName) {

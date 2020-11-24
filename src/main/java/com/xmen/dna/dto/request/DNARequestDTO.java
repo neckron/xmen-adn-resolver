@@ -10,6 +10,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Holds information about DNA to be validated. Input data for /mutant
+ * @author fr.rodriguez
+ */
 @ApiModel(value = "DNARequestDTO", description = "Holds information about DNA to be validated")
 @Getter
 @Setter
@@ -17,10 +21,8 @@ import lombok.Setter;
 public class DNARequestDTO {
 
     @NotEmpty(message="You should specify a valid dna sequence")
-    @ApiModelProperty(required = true)
+    @ApiModelProperty(required = true, example = "[\"AAAA\", \"GGGG\"]")
     private String[] dna;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String name;
     @ApiModelProperty(name = "dna validation algorithm", allowableValues = "default,simple")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String validationAlgorithm;

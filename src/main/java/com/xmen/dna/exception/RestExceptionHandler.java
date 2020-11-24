@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.xmen.dna.dto.response.DNAResponseDTO;
 
+/**
+ * This class listen for specific Exception clases in order to
+ * handle the same response when they occur.
+ * @author fr.rodriguez
+ */
 @ControllerAdvice
 public class RestExceptionHandler {
 

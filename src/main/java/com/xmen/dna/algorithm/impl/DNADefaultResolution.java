@@ -1,5 +1,7 @@
 package com.xmen.dna.algorithm.impl;
 
+import static com.xmen.dna.util.GeneralUtils.generate;
+
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,23 +22,47 @@ public class DNADefaultResolution implements DNAResolutionAlgorithm {
     /**
      * minimal amount of matches that make a DNA sequence mutant.
      */
-    private int minMatches = 2;
+    private static int minMatches = 2;
+    /**
+     *
+     */
+    private static int matchStringLenght = 4;
     /**
      * pattern to validate DNA is compound only for ACTG letters.
      */
     private static final Pattern dnaPattern = Pattern.compile("^[ACTG]*$");
+
+    private static final String AAAA = generate('A',matchStringLenght);
+    private static final String GGGG = generate('G',matchStringLenght);
+    private static final String TTTT = generate('T',matchStringLenght);
+    private static final String CCCC = generate('C',matchStringLenght);
 
     @Override
     public boolean isMutant(String[] dna) throws SquareMatrixException {
         boolean result=false;
         long matches = 0L;
         char[][] dnaMatrix = GeneralUtils.initSquareMatrix(dna, dnaPattern);
-        // find pattern matches in dnaMatrix rows
-        matches += validateRowsAndColumns(dnaMatrix,minMatches);
-        // find diagonals
-        if(matches>=minMatches) {
-            result = true;
+
+        if(dnaMatrix.length>=matchStringLenght) {
+            // find pattern matches in dnaMatrix rows
+            matches += validateRowsAndColumns(dnaMatrix,minMatches);
+
+            // find pattern matches in dnaMatrix first diagonal
+            if(matches<2) {
+                matches += validateDiagonalLeft(dnaMatrix,minMatches,matchStringLenght);
+            }
+
+            // find pattern matches in dnaMatrix second diagonal
+            if(matches<2) {
+                matches += validateDiagonalRight(dnaMatrix,minMatches,matchStringLenght);
+            }
+
+            if(matches>=minMatches) {
+                result = true;
+            }
         }
+
+
         return result;
     }
 
@@ -45,14 +71,31 @@ public class DNADefaultResolution implements DNAResolutionAlgorithm {
      * @param sequence
      * @return
      */
-    public int getSequenceChunkHits(String sequence) {
+    public long getSequenceChunkHits(String sequence, int minMatches) {
         int matchesCount = 0;
-        matchesCount += StringUtils.countMatches(sequence,"AAAA");
-        matchesCount += StringUtils.countMatches(sequence,"TTTT");
-        matchesCount += StringUtils.countMatches(sequence,"CCCC");
-        matchesCount += StringUtils.countMatches(sequence, "GGGG");
-        return matchesCount;
+        matchesCount += StringUtils.countMatches(sequence,AAAA);
 
+        if (matchesCount<minMatches) {
+            matchesCount += StringUtils.countMatches(sequence,TTTT);
+        }
+
+        if (matchesCount<minMatches) {
+            matchesCount += StringUtils.countMatches(sequence,CCCC);
+        }
+
+        if (matchesCount<minMatches) {
+            matchesCount += StringUtils.countMatches(sequence, GGGG);
+        }
+
+        return matchesCount;
+    }
+
+    private long match(String sequenceToMatch, int minMatches){
+        long rowHits = getSequenceChunkHits(sequenceToMatch,minMatches);
+        if(rowHits>0) {
+            logger.info("algorithm {} has founded: {} in row {} ",this.getClass(), rowHits);
+        }
+        return rowHits;
     }
 
     /**
@@ -66,12 +109,8 @@ public class DNADefaultResolution implements DNAResolutionAlgorithm {
         int n = dnaMatrix.length;
         long totalHits = 0;
         for (int i=0 ; i<n && totalHits<minMatches; i++) {
-            int rowHits = getSequenceChunkHits(String.valueOf(dnaMatrix[i]));
-            if(rowHits>0) {
-                logger.info("algorithm {} has founded: {} in row {} ",this.getClass(), rowHits,i);
-            }
-            totalHits += rowHits;
-        }
+            totalHits += match(String.valueOf(dnaMatrix[i]),minMatches);
+          }
 
         if(totalHits<minMatches) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -79,13 +118,57 @@ public class DNADefaultResolution implements DNAResolutionAlgorithm {
                 for (int i = 0; i < n && totalHits<minMatches ; i++) {
                     stringBuilder.append(dnaMatrix[i][j]);
                 }
-                int columnHits = getSequenceChunkHits(stringBuilder.toString());
-                if (columnHits > 0) {
-                    logger.info("algorithm {} has founded: {} in column {} ",this.getClass(), columnHits,j);
-                }
+                totalHits += match(stringBuilder.toString(),minMatches);
                 stringBuilder = new StringBuilder();
-                totalHits += columnHits;
+
             }
+        }
+
+        return totalHits;
+    }
+
+    public long validateDiagonalLeft(char[][] dnaMatrix, int minMatches, int k) {
+        int n = dnaMatrix.length;
+        long totalHits = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i=k-1,j=k-1; i<n && totalHits<minMatches ;i++,j++) {
+            for(int x=0,y=j; x<=i ;x++,y--) {
+                stringBuilder.append(dnaMatrix[x][y]);
+            }
+            totalHits += match(stringBuilder.toString(),minMatches);
+            stringBuilder = new StringBuilder();
+        }
+
+        // cambiar 4
+        for(int i=n-(k-1),j=n-(k-1); i>=0 && totalHits<minMatches ;i--,j--) {
+            for(int x=n-1,y=j; x>=i ; x--,y++) {
+                stringBuilder.append(dnaMatrix[x][y]);
+            }
+            totalHits += match(stringBuilder.toString(),minMatches);
+            stringBuilder = new StringBuilder();
+        }
+
+        return totalHits;
+    }
+
+    public long validateDiagonalRight(char[][] dnaMatrix, int minMatches, int k) {
+        int n = dnaMatrix.length;
+        long totalHits = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i= n-(k-1),j=n-k; i>=0 && totalHits<minMatches ;i--,j++) {
+            for(int x=n-1,y=j; x>=i && y>=0 ;x--,y--) {
+                stringBuilder.append(dnaMatrix[x][y]);
+            }
+            totalHits += match(stringBuilder.toString(),minMatches);
+            stringBuilder = new StringBuilder();
+        }
+
+        for(int i=n-k,j=n-(k-1); i<n-1 && totalHits<minMatches ;i++,j--) {
+            for(int x=0,y=j; x<=i && y>=0 ;x++,y++) {
+                stringBuilder.append(dnaMatrix[x][y]);
+            }
+            totalHits += match(stringBuilder.toString(),minMatches);
+            stringBuilder = new StringBuilder();
         }
 
         return totalHits;

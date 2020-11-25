@@ -74,4 +74,18 @@ public class GeneralUtils {
         return chars;
     }
 
+    /**
+     * concatenates charRoGenerate k times
+     * @param charTogenerate
+     * @param k
+     * @return
+     */
+    public static String generate(Character charTogenerate, int k) {
+        String generated ="";
+        for(int i=0; i<k; i++){
+            generated += charTogenerate;
+        }
+        return generated;
+    }
+
 }
